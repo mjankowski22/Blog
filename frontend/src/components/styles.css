@@ -1,0 +1,17 @@
+.navbar {
+    padding-left:3% ;
+    padding-right:3% ;
+}
+.navbar-nav{
+    margin: 0;
+}
+.footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.gallery{
+    margin-left: 5%;
+    margin-right: 4%;
+    margin-top: 20px;
+}
