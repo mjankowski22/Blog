@@ -10,14 +10,13 @@ var Posts = (props) => {
 
     const {posts} = props
 
-    console.log(posts)
 
     if(!posts || posts.length === 0 ) return <p>Could not find any post</p>
 
     return(
         <div className="row row-cols-2 row-cols-md-4 gallery">
             {posts.map((post) => (
-            <div class="col mb-4">
+            <div key={post.id} className="col mb-4">
             <div className="card h-100" style={{ width: "18rem" }}>
                 <img src="https://picsum.photos/100/50" className="card-img-top" alt="..." />
                 <div className="card-body">
@@ -25,7 +24,7 @@ var Posts = (props) => {
                 <p className="card-text" style={{maxWidth:"150px"}}>
                     {truncate(post.content)}
                 </p>
-                <a href="#" className="btn btn-primary">
+                <a href={`post/${post.slug}`} className="btn btn-primary">
                     Zobacz calosc
                 </a>
                 </div>

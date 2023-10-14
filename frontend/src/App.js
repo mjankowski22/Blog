@@ -21,6 +21,7 @@ function App() {
           <Posts posts={posts}/>
       </div>
     )
+    
 }
 
 export default App;
