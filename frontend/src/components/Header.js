@@ -32,6 +32,10 @@ var Header = () => {
 
     }
 
+    const register = (event) => {
+      navigate('/register')
+    }
+
     return(
         <nav className="navbar bg-body-tertiary">
         <div className="container-fluid">
@@ -40,7 +44,7 @@ var Header = () => {
             <button className="btn btn-outline-success me-2" type="button">Log In</button>
           </form>
           <form className="ms-2">
-            <button className="btn btn-outline-success me-2" type="button">Log Out</button>
+            <button className="btn btn-outline-success me-2" type="button" onClick={register}>Register</button>
           </form>
           <form className="d-flex" role="search">
             <div id="search" >

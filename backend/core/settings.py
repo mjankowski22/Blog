@@ -148,3 +148,11 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
 ]
+
+DEFAULT_FROM_EMAIL = 'michal.jankowski22@o2.pl'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_SSL=True
+EMAIL_HOST = 'poczta.o2.pl'
+EMAIL_HOST_USER = 'michal.jankowski22@o2.pl'
+EMAIL_HOST_PASSWORD = '6Fs4hvt22'
+EMAIL_PORT = 465

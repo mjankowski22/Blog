@@ -35,16 +35,6 @@ var Posts = (props) => {
     )
         
     
-    {/* return (
-        <div>
-          <h1>Lista Postów</h1>
-          <ul>
-            {posts.map((post) => (
-              <li>{post.title}</li>
-            ))}
-          </ul>
-        </div>
-      ); */}
     
 
 

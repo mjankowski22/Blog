@@ -8,6 +8,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Single from './components/Single'
 import Search from './components/Search';
+import Register from './components/Register'
 
 
 const routing = (
@@ -18,6 +19,7 @@ const routing = (
       <Route exact path='/' Component={App}/>
       <Route path='/post/:slug' Component={Single}/>
       <Route path='/search' Component={Search}/>
+      <Route path='/register' Component={Register}/>
     </Routes>
   <Footer/>
   </React.StrictMode>
