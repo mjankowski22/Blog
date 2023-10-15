@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import PostList,SinglePost,SearchPost,CreateUser
+from .views import PostList,SinglePost,SearchPost,CreateUser,Activate
 
 app_name = 'api'
 
@@ -8,5 +8,6 @@ urlpatterns = [
     path('',PostList.as_view(),name='post-list'),
     path('post/<str:slug>/',SinglePost.as_view(),name='post-single'),
     path('search/',SearchPost.as_view(),name='post-search'),
-    path('register/',CreateUser.as_view(),name="create-user")
+    path('register/',CreateUser.as_view(),name="create-user"),
+    path('activate/<str:uid>/<str:token>/',Activate.as_view(),name="activate")
 ]

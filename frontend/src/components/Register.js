@@ -50,11 +50,11 @@ const Register = () => {
     <React.Fragment>
         <form className="register-form">
         <div className="form-group">
-                <label for="InputUsername">Username</label>
+                <label>Username</label>
                 <input type="text" className="form-control" id="InputUsername" name="username" placeholder="Enter Username"/>
             </div>
             <div className="form-group">
-                <label for="InputEmail">Email address</label>
+                <label>Email address</label>
                 <input type="email" className="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="Enter email" name="email" onChange={checkEmail}/>
                 <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
@@ -62,11 +62,11 @@ const Register = () => {
                 <p style={{color:"red"}}>It is not correct email</p>
             </div>
             <div className="form-group">
-                <label for="InputPassword">Password</label>
+                <label>Password</label>
                 <input type="password" className="form-control" id="InputPassword" placeholder="Password" name="password" onChange={checkPassword}/>
             </div>
             <div className="form-group">
-                <label for="InputPassword2">Repeat Password</label>
+                <label>Repeat Password</label>
                 <input type="password" className="form-control" id="InputPassword2" placeholder="Repeat Password" onChange={checkPassword}/>
             </div>
             <div className="form-group" style={{display:errorObjPass ? "block" : "none"}}>
