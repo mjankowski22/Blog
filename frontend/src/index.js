@@ -10,7 +10,7 @@ import Single from './components/Single'
 import Search from './components/Search';
 import Register from './components/Register'
 import Login from './components/Login';
-
+import Panel from './components/Panel'
 
 const routing = (
   <BrowserRouter>
@@ -22,6 +22,7 @@ const routing = (
       <Route path='/search' Component={Search}/>
       <Route path='/register' Component={Register}/>
       <Route path='/login' Component={Login}/>
+      <Route path='/panel' Component={Panel}/>
     </Routes>
   <Footer/>
   </React.StrictMode>

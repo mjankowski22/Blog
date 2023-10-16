@@ -6,14 +6,16 @@
     margin: 0;
 }
 .footer{
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
+    margin-top: 10%;
 }
 .gallery{
     margin-left: 5%;
     margin-right: 4%;
     margin-top: 20px;
+    margin-bottom: 15%;
 }
 .register-form{
     width: 50%;
@@ -28,4 +30,8 @@
 }
 .btn-reg{
     margin:2%;
+}
+.greetings{
+    margin-top: 3%;
+    margin-left: 6%;
 }

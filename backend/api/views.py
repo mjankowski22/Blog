@@ -8,13 +8,13 @@ from django.contrib.auth.models import User
 from rest_framework import response
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
-from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_decode,urlsafe_base64_encode
 from .validation_token import account_activation_token
-from rest_framework.decorators import api_view,renderer_classes
-from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from django.shortcuts import redirect
 from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTTokenUserAuthentication
+from rest_framework_simplejwt.tokens import AccessToken
+
 
 
 class PostList(generics.ListAPIView):
@@ -84,3 +84,20 @@ class Activate(APIView):
 
 
         
+class GetUserData(APIView):
+    authentication_classes = [JWTTokenUserAuthentication,]
+    permission_classes = [IsAuthenticated,]
+
+    def get(self,request):
+        access_token = AccessToken(request.META['HTTP_AUTHORIZATION'][4:])
+        
+        user = User.objects.get(id=access_token['user_id'])
+        user_data = {}
+        posts = PostSerializer(user.posts.all(),many=True)
+        user_data = {
+            'username':user.username,
+            'email':user.email,
+            'posts':posts.data
+        }
+        return response.Response(user_data,status=200)
+    

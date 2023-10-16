@@ -13,6 +13,12 @@ var Header = () => {
 
     const [data,setData] = useState("")
 
+
+    const user_panel = (event) => {
+      event.preventDefault()
+      navigate('/panel')
+    }
+
     const handleChange = (event) =>{
         setData(event.target.value)
     }
@@ -84,9 +90,14 @@ var Header = () => {
           </form>
           </React.Fragment>
           :
+          <React.Fragment>
+          <form className="ms-auto">
+          <button className="btn btn-outline-success me-2" type="button" onClick={user_panel}>Your profile</button>
+          </form>
           <form className="ms-auto">
             <button className="btn btn-outline-success me-2" type="button" onClick={logout}>Log out</button>
           </form>
+        </React.Fragment>
           }
           <form className="d-flex" role="search">
             <div id="search" >
