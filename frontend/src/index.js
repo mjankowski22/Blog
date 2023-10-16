@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import Single from './components/Single'
 import Search from './components/Search';
 import Register from './components/Register'
+import Login from './components/Login';
 
 
 const routing = (
@@ -20,6 +21,7 @@ const routing = (
       <Route path='/post/:slug' Component={Single}/>
       <Route path='/search' Component={Search}/>
       <Route path='/register' Component={Register}/>
+      <Route path='/login' Component={Login}/>
     </Routes>
   <Footer/>
   </React.StrictMode>

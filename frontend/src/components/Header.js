@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import './styles.css'
 import axiosInstance from "./Axios";
 import {useNavigate} from "react-router-dom"
-import Posts from "./Posts";
+import jwt_decode from "jwt-decode"
 
 
 
@@ -32,6 +32,40 @@ var Header = () => {
 
     }
 
+    const login = (event) => {
+          event.preventDefault()
+          navigate('/login') 
+    }
+
+    useEffect(() => {
+      const accessToken = localStorage.getItem('access_token');
+      const tokenExpiration = accessToken ? jwt_decode(accessToken).exp : null;
+      
+      if (tokenExpiration) {
+          const currentTime = Date.now() / 1000;
+          const timeToExpiration = tokenExpiration - currentTime;
+          
+          if (timeToExpiration <= 0) {
+              localStorage.removeItem('access_token');
+              localStorage.removeItem('refresh_token');
+              axiosInstance.defaults.headers['Authorization'] = null;
+              localStorage.removeItem('is_logged');
+              navigate('/login');
+          }
+      }
+  }, [localStorage.getItem('is_logged')]);
+
+
+    const logout = (event) => {
+          event.preventDefault()
+          localStorage.removeItem('access_token')
+          localStorage.removeItem('refresh_token')
+          axiosInstance.defaults.headers['Authorization'] = null
+          localStorage.removeItem('is_logged')
+          navigate('/login')
+          }
+    
+
     const register = (event) => {
       navigate('/register')
     }
@@ -40,12 +74,20 @@ var Header = () => {
         <nav className="navbar bg-body-tertiary">
         <div className="container-fluid">
           <a className="navbar-brand" href="/">Blog</a>
+          {!localStorage.getItem('is_logged') ?
+          <React.Fragment>
           <form className="ms-auto">
-            <button className="btn btn-outline-success me-2" type="button">Log In</button>
+            <button className="btn btn-outline-success me-2" type="button" onClick={login}>Log in</button>
           </form>
           <form className="ms-2">
             <button className="btn btn-outline-success me-2" type="button" onClick={register}>Register</button>
           </form>
+          </React.Fragment>
+          :
+          <form className="ms-auto">
+            <button className="btn btn-outline-success me-2" type="button" onClick={logout}>Log out</button>
+          </form>
+          }
           <form className="d-flex" role="search">
             <div id="search" >
             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" onChange={handleChange}/>

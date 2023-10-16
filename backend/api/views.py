@@ -13,6 +13,8 @@ from django.utils.http import urlsafe_base64_decode,urlsafe_base64_encode
 from .validation_token import account_activation_token
 from rest_framework.decorators import api_view,renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
+from django.shortcuts import redirect
+from rest_framework.permissions import IsAuthenticated
 
 
 class PostList(generics.ListAPIView):
@@ -71,12 +73,12 @@ class Activate(APIView):
         try:
             uid = urlsafe_base64_decode(uid).decode()
             user = User.objects.get(id=uid)
-        except(TypeError,ValueError,OverflowError,User.DoesNotExist):
+        except(TypeError,ValueError,OverflowError,User.DoesNotExist) as error:
             user = None
         if user is not None and account_activation_token.check_token(user,token):
             user.is_active = True
             user.save()
-            return response.Response("OK",status=200)
+            return redirect('http://localhost:3000')
         else:
             return response.Response("NOT OK",status=400)      
 
