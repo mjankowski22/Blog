@@ -17,7 +17,7 @@ const Login = () => {
             localStorage.setItem('access_token',res.data.access)
             axiosInstance.defaults.headers['Authorization'] = 'JWT ' + localStorage.getItem('access_token')
             localStorage.setItem('is_logged',true)
-            navigation('/')
+            navigation('/panel')
         })
         
     }

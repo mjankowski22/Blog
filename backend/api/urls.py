@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import PostList,SinglePost,SearchPost,CreateUser,Activate,GetUserData
+from .views import PostList,SinglePost,SearchPost,CreateUser,Activate,GetUserData,AddPost
 from rest_framework_simplejwt.views import TokenObtainPairView,TokenRefreshView
 
 
@@ -14,5 +14,6 @@ urlpatterns = [
     path('activate/<str:uid>/<str:token>/',Activate.as_view(),name="activate"),
     path('token/',TokenObtainPairView.as_view(),name='token-obtain'),
     path('token/refresh/',TokenRefreshView.as_view(),name='token-refresh'),
-    path('user/',GetUserData.as_view(),name='get-user')
+    path('user/',GetUserData.as_view(),name='get-user'),
+    path('add/',AddPost.as_view(),name='add-post')
 ]

@@ -1,6 +1,7 @@
 import {React,useState,useEffect} from "react";
 import Posts from './components/Posts'
 import axiosInstance from './components/Axios'
+import Panel from "./components/Panel";
 
 function App() {
 

@@ -11,7 +11,7 @@ import Search from './components/Search';
 import Register from './components/Register'
 import Login from './components/Login';
 import Panel from './components/Panel'
-
+import AddPost from './components/AddPost'
 const routing = (
   <BrowserRouter>
   <React.StrictMode>

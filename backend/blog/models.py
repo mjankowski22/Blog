@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.conf import settings
 
 
+
 def upload_location(instance,filename):
     return 'posts/{0}/{1}'.format(instance.id,filename)
 
@@ -17,6 +18,7 @@ class Post(models.Model):
     author = models.ForeignKey(User,on_delete=models.CASCADE,related_name='posts')
     date = models.DateTimeField(auto_now=True)
     image = models.ImageField(null=True,blank=True,upload_to=upload_location)
+
 
 
     def __str__(self):

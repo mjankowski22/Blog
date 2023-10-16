@@ -14,7 +14,7 @@ from django.shortcuts import redirect
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTTokenUserAuthentication
 from rest_framework_simplejwt.tokens import AccessToken
-
+from django.utils.text import slugify
 
 
 class PostList(generics.ListAPIView):
@@ -38,34 +38,32 @@ class SearchPost(generics.ListAPIView):
     search_fields = ['title','content']
 
 
-class CreateUser(generics.CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+class CreateUser(APIView):
 
-    def create(self,request,*args, **kwargs):
+    def post(self,request):
         username = request.data['username']
-        email= request.data['email']
-        password = request.data['password']
+        email = request.data['email']
+        
         if User.objects.filter(username=username).exists():
             return(response.Response({"text":"This username already exists."},status=302))
         elif User.objects.filter(email=email).exists():
             return(response.Response({"text":"This email is taken."},status=302))
         else:
-            user = User.objects.create(username=username,email=email,password=password)
-            user.is_active = False
-            user.save()
-            mail_subject = 'Activate your blog account'
-            message = render_to_string('acc_active_email.html',{
-                'user':user,
-                'uid':urlsafe_base64_encode(str(user.id).encode()),
-                'token':account_activation_token.make_token(user),
-            })
-            to_email=email
-            try:
-                send_mail(mail_subject,message,None,[to_email],fail_silently=False)
-                return response.Response("OK", status=201)
-            except:
-                return response.Response({"text": "Error sending email."}, status=500)
+            serialized = UserSerializer(data=request.data)
+            if serialized.is_valid():
+                user = serialized.save()
+                mail_subject = 'Activate your blog account'
+                message = render_to_string('acc_active_email.html',{
+                    'user':user,
+                    'uid':urlsafe_base64_encode(str(user.id).encode()),
+                    'token':account_activation_token.make_token(user),
+                })
+                to_email=email
+                try:
+                    send_mail(mail_subject,message,None,[to_email],fail_silently=False)
+                    return response.Response("OK", status=201)
+                except:
+                    return response.Response({"text": "Error sending email."}, status=500)
             
 
 class Activate(APIView):
@@ -100,4 +98,17 @@ class GetUserData(APIView):
             'posts':posts.data
         }
         return response.Response(user_data,status=200)
+    
+
+class AddPost(APIView):
+    authentication_classes = [JWTTokenUserAuthentication,]
+    permission_classes = [IsAuthenticated,]
+
+    def post(self,request):
+        user = User.objects.get(username=request.data['username'])
+        post = Post.objects.create(title=request.data['title'],content=request.data['content'],author=user)
+        post.slug = slugify(post.title)
+        post.save()
+        return response.Response("Created",status=201)
+
     

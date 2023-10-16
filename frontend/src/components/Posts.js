@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { useLocation } from "react-router-dom";
+import AddPost from "./AddPost";
 
 
 
@@ -8,12 +10,19 @@ var truncate = (text) => {
 
 var Posts = (props) => {
 
-    const {posts} = props
+    
+    const {posts,setAdd} = props
+    const location = useLocation()
+    
+    const add = (event) => {
+        event.preventDefault()
+        setAdd(true)
+    }
 
-
-    if(!posts || posts.length === 0 ) return <p>Could not find any post</p>
+    if((!posts || posts.length === 0) && location.pathname!=='/panel') return <p>Could not find any post</p>
 
     return(
+        
         <div className="row row-cols-2 row-cols-md-4 gallery">
             {posts.map((post) => (
             <div key={post.id} className="col mb-4">
@@ -31,6 +40,18 @@ var Posts = (props) => {
             </div>
             </div>
             ))}
+            {location.pathname === '/panel' &&
+            <div className="col mb-4">
+            <div className="card h-100" style={{ width: "18rem" }}>
+                <img src="https://cdn-icons-png.flaticon.com/512/107/107078.png" className="card-img-top" style={{scale:"0.7"}} alt="..." />
+                <div className="card-body">
+                <a onClick={add} className="btn btn-primary">
+                    Dodaj post
+                </a>
+                </div>
+            </div>
+            </div>
+        }
         </div>
     )
         
