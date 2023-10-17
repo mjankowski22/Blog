@@ -24,7 +24,7 @@ var Posts = (props) => {
     return(
         
         <div className="row row-cols-2 row-cols-md-4 gallery">
-            {posts.map((post) => (
+            {posts && posts.map((post) => (
             <div key={post.id} className="col mb-4">
             <div className="card h-100" style={{ width: "18rem" }}>
                 <img src="https://picsum.photos/100/50" className="card-img-top" alt="..." />

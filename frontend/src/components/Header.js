@@ -73,6 +73,7 @@ var Header = () => {
     
 
     const register = (event) => {
+      event.preventDefault()
       navigate('/register')
     }
 

@@ -20,6 +20,7 @@ from django.utils.text import slugify
 class PostList(generics.ListAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    
 
 
 class SinglePost(generics.RetrieveAPIView):
