@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'api',
     'corsheaders',
     'django_filters',
-    'rest_framework_simplejwt'
+    'rest_framework_simplejwt',
+    'django.contrib.postgres'
 ]
 
 
