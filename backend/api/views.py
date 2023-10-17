@@ -38,6 +38,25 @@ class SearchPost(generics.ListAPIView):
     filter_backends = [filters.SearchFilter]
     search_fields = ['title','content']
 
+class UpdatePost(APIView):
+    def post(self,request):
+        post_id = request.data['id']
+        post_title = request.data['title']
+        post_content =request.data['content']
+        post = Post.objects.get(id=post_id)
+        post.title = post_title
+        post.content = post_content
+        post.slug = slugify(post_title)
+        post.save()
+        return response.Response({'slug':post.slug},status=200)
+    
+class DeletePost(APIView):
+    def post(self,request):
+        post_id = request.data['id']
+        post = Post.objects.get(id=post_id)
+        post.delete()
+        return response.Response("Deleted",status=200)
+
 
 class CreateUser(APIView):
 
@@ -111,5 +130,16 @@ class AddPost(APIView):
         post.slug = slugify(post.title)
         post.save()
         return response.Response("Created",status=201)
-
     
+
+class CheckAuthor(APIView):
+    authentication_classes = [JWTTokenUserAuthentication,]
+    permission_classes = [IsAuthenticated,]
+
+    def post(self,request):
+        post_slug= request.data['slug']
+        access_token = AccessToken(request.META['HTTP_AUTHORIZATION'][4:])
+        if Post.objects.get(slug=post_slug).author.id == access_token['user_id']:
+            return response.Response({"isAuthor":True},status=200)
+        else:
+            return response.Response({"isAuthor":False},status=200)

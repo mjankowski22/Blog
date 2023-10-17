@@ -39,7 +39,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 20%;
 }
 .edit{
     margin: 10px;
+}
+.update-form{
+    margin-top: 1%;
+    margin-bottom: 15%;
 }
