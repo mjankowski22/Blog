@@ -9,7 +9,7 @@ import AddPost from "./AddPost";
 const Panel = () => {
 
     
-    
+    const navigate = useNavigate()
     const [userData,setUserData] = useState({username:null,email:null,posts:null})
     const [addVisible,setAdd] = useState(false)
     
@@ -24,6 +24,10 @@ const Panel = () => {
             })
     },[setUserData,addVisible])
 
+    const handleClick = (event) =>{
+        event.preventDefault()
+        navigate('/settings')
+    }
    
     if(localStorage.getItem('is_logged')===null){
         window.location.href = 'http://localhost:3000'
@@ -32,7 +36,7 @@ const Panel = () => {
             <React.Fragment>
               {!addVisible ? (
                 <div className="greetings">
-                  <h1>Hello {userData.username}!</h1>
+                  <h1 style={{display:"inline-block"}} >Hello {userData.username}!</h1><button style={{display:"inline-block",marginLeft:"2%",marginBottom:"1.5%"}} className="btn btn-outline-success" onClick={handleClick} type="submit" >Settings</button>
                   <h3>Your posts:</h3>
                   <Posts posts={userData.posts} setAdd={setAdd} />
                 </div>

@@ -12,6 +12,8 @@ import Register from './components/Register'
 import Login from './components/Login';
 import Panel from './components/Panel'
 import AddPost from './components/AddPost'
+import Settings from './components/Settings'
+
 const routing = (
   <BrowserRouter>
   <React.StrictMode>
@@ -23,6 +25,7 @@ const routing = (
       <Route path='/register' Component={Register}/>
       <Route path='/login' Component={Login}/>
       <Route path='/panel' Component={Panel}/>
+      <Route path='/settings' Component={Settings}/>
     </Routes>
   <Footer/>
   </React.StrictMode>

@@ -63,6 +63,7 @@ var Header = () => {
 
 
     const logout = (event) => {
+          localStorage.setItem('panel_search',false)
           event.preventDefault()
           localStorage.removeItem('access_token')
           localStorage.removeItem('refresh_token')
