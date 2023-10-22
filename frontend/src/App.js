@@ -6,7 +6,7 @@ import Panel from "./components/Panel";
 function App() {
 
     const [posts,setPosts] = useState(null)
-
+    localStorage.setItem('panel_search',false)
     useEffect(() => {
         axiosInstance.get()
             .then(response => {

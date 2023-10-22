@@ -15,7 +15,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTTokenUserAuthentication
 from rest_framework_simplejwt.tokens import AccessToken
 from django.utils.text import slugify
-
+from django.db.models import Q
 
 class PostList(generics.ListAPIView):
     queryset = Post.objects.all()
@@ -32,11 +32,28 @@ class SinglePost(generics.RetrieveAPIView):
         obj = Post.objects.get(slug=slug)
         return obj
     
-class SearchPost(generics.ListAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['title','content']
+class SearchPost(APIView):
+    def get(self,request):
+        search = request.GET['search']
+        isLogged = request.GET['isLogged']
+        user = None
+        posts = Post.objects.filter(
+            Q(title__icontains=search) | Q(content__icontains=search)
+        )
+        if(isLogged == 'true'):
+            access_token = AccessToken(request.META['HTTP_AUTHORIZATION'][4:])
+            user = User.objects.get(id=access_token['user_id'])
+            posts= posts.filter(author=user)
+        serializer = PostSerializer(posts,many=True)        
+        return response.Response(serializer.data,status=200)
+    
+    
+
+# class SearchPost(generics.ListAPIView):
+#     queryset = Post.objects.all()
+#     serializer_class = PostSerializer
+#     filter_backends = [filters.SearchFilter]
+#     search_fields = ['title','content']
 
 class UpdatePost(APIView):
     def post(self,request):

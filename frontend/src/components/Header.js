@@ -25,7 +25,7 @@ var Header = () => {
     const handleClick = (event) => {
         event.preventDefault()
         axiosInstance.get('/search/',
-            {params:{search:data}}
+            {params:{search:data,isLogged:localStorage.getItem('panel_search')}}
         )
             .then(response => {
                 const post = response.data

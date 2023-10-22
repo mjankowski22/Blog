@@ -13,7 +13,7 @@ const Panel = () => {
     const [userData,setUserData] = useState({username:null,email:null,posts:null})
     const [addVisible,setAdd] = useState(false)
     
-
+    localStorage.setItem('panel_search',true)
     useEffect(() => {
         axiosInstance.get('user/')
             .then(response => {
