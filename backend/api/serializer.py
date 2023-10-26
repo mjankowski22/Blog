@@ -4,9 +4,12 @@ from django.contrib.auth.models import User
 
 
 class PostSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(required=False)
+
+
     class Meta:
         model = Post 
-        fields = ['id','title','content','date','author','slug']
+        fields = ['id','title','content','date','author','slug','image']
 
 
 class UserSerializer(serializers.ModelSerializer):

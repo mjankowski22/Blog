@@ -20,6 +20,7 @@ var Posts = (props) => {
     }
 
     if((!posts || posts.length === 0) && location.pathname!=='/panel') return <p>Could not find any post</p>
+    console.log(posts)
 
     return(
         
@@ -27,7 +28,7 @@ var Posts = (props) => {
             {posts && posts.map((post) => (
             <div key={post.id} className="col mb-4">
             <div className="card h-100" style={{ width: "18rem" }}>
-                <img src="https://picsum.photos/100/50" className="card-img-top" alt="..." />
+                <img src={post.image!==null ? (localStorage.getItem('panel_search')==="true"? "http://localhost:8000":"") + post.image :"https://picsum.photos/100/50"}className="card-img-top" alt="..." />
                 <div className="card-body">
                 <h5 className="card-title">{post.title}</h5>
                 <p className="card-text" style={{maxWidth:"150px"}}>

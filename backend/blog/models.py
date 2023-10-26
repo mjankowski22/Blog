@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 
@@ -19,10 +21,11 @@ class Post(models.Model):
     date = models.DateTimeField(auto_now=True)
     image = models.ImageField(null=True,blank=True,upload_to=upload_location)
 
-
+    
 
     def __str__(self):
         return self.title
+
 
     
     

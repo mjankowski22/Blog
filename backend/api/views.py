@@ -16,6 +16,7 @@ from rest_framework_simplejwt.authentication import JWTTokenUserAuthentication
 from rest_framework_simplejwt.tokens import AccessToken
 from django.utils.text import slugify
 from django.db.models import Q
+from rest_framework.parsers import MultiPartParser,FormParser
 
 class PostList(generics.ListAPIView):
     queryset = Post.objects.all()
@@ -48,12 +49,6 @@ class SearchPost(APIView):
         return response.Response(serializer.data,status=200)
     
     
-
-# class SearchPost(generics.ListAPIView):
-#     queryset = Post.objects.all()
-#     serializer_class = PostSerializer
-#     filter_backends = [filters.SearchFilter]
-#     search_fields = ['title','content']
 
 class UpdatePost(APIView):
     def post(self,request):
@@ -140,12 +135,16 @@ class GetUserData(APIView):
 class AddPost(APIView):
     authentication_classes = [JWTTokenUserAuthentication,]
     permission_classes = [IsAuthenticated,]
+    parser_classes = [MultiPartParser,FormParser,]
 
     def post(self,request):
         user = User.objects.get(username=request.data['username'])
         post = Post.objects.create(title=request.data['title'],content=request.data['content'],author=user)
         post.slug = slugify(post.title)
         post.save()
+        if request.data.get('image'):
+            post.image = request.data['image']
+            post.save()
         return response.Response("Created",status=201)
     
 
